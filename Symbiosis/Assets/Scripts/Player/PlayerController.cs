@@ -8,9 +8,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpVelocity = 5f;
     [SerializeField] private float jumpingControl = 2.5f;
     [SerializeField] private LayerMask platformLayer;
+    [SerializeField] private Transform playerSprite;
 
     private Rigidbody2D rigid;
     private BoxCollider2D boxCollider;
+    private Animator animator;
 
     private int moveDir = 0;
     private bool rightDown = false;
@@ -22,6 +24,7 @@ public class PlayerController : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+        animator = playerSprite.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -72,6 +75,11 @@ public class PlayerController : MonoBehaviour
             rigid.velocity += new Vector2(moveDir * moveSpeed * jumpingControl * Time.deltaTime, 0);
             rigid.velocity = new Vector2(Mathf.Clamp(rigid.velocity.x, -moveSpeed, moveSpeed), rigid.velocity.y);
         }
+        if (rigid.velocity.x > 0.01)
+            playerSprite.localScale = new Vector3(1f, 1f, 1f);
+        else if (rigid.velocity.x < -0.01)
+            playerSprite.localScale = new Vector3(-1f, 1f, 1f);
+        animator.SetFloat("speed", Mathf.Abs(rigid.velocity.x));
     }
 
     private void Jump()
@@ -79,11 +87,14 @@ public class PlayerController : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && IsOnGround())
         {
             rigid.velocity = new Vector2(rigid.velocity.x, jumpVelocity);
+            animator.Play("Jump");
         }
     }
 
     private bool IsOnGround()
     {
-        return Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, platformLayer);
+        bool isOnGround = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, platformLayer);
+        animator.SetBool("isOnGround", isOnGround);
+        return isOnGround;
     }
 }
