@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Selecter : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("ChangeableObject"))
+        if (collision.CompareTag("ChangeableObject") || collision.CompareTag("Player"))
         {
             ChangeableObject changeableObject = collision.GetComponent<ChangeableObject>();
             InputController.instance.selectedObjects.Add(changeableObject);
@@ -22,7 +17,7 @@ public class Selecter : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("ChangeableObject"))
+        if (collision.CompareTag("ChangeableObject") || collision.CompareTag("Player"))
         {
             ChangeableObject changeableObject = collision.GetComponent<ChangeableObject>();
             InputController.instance.selectedObjects.Remove(changeableObject);

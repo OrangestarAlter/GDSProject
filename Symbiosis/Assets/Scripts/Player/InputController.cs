@@ -18,12 +18,6 @@ public class InputController : MonoBehaviour
         instance = this;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -40,8 +34,11 @@ public class InputController : MonoBehaviour
             if (raycastHit)
             {
                 ClearSelect();
-                selecterInstance = Instantiate(selecter, raycastHit.transform.position, Quaternion.identity);
+                selecterInstance = Instantiate(selecter, raycastHit.transform);
                 selecterInstance.transform.localScale = new Vector3(selectRange, selectRange, 1f);
+                ChangeableObject changeableObject = raycastHit.transform.GetComponent<ChangeableObject>();
+                selectedObjects.Add(changeableObject);
+                changeableObject.OnSelected();
             }
         }
     }
@@ -58,6 +55,12 @@ public class InputController : MonoBehaviour
     {
         if (selecterInstance)
             Destroy(selecterInstance);
+        if(selectedObjects.Count != 0)
+        {
+            foreach (ChangeableObject obj in selectedObjects)
+                obj.OnDisselected();
+            selectedObjects.Clear();
+        }
     }
 
     private void SelectDensity()
