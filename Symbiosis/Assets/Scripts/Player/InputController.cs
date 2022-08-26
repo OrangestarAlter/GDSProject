@@ -12,6 +12,7 @@ public class InputController : MonoBehaviour
     [SerializeField] private float selectRange;
 
     private GameObject selecterInstance;
+    private bool selfSelected = false;
 
     private void Awake()
     {
@@ -21,6 +22,11 @@ public class InputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.S))
+            if (!selfSelected)
+                Select(transform);
+            else
+                ClearSelect();
         LeftClick();
         RightClick();
         SelectDensity();
@@ -32,14 +38,7 @@ public class InputController : MonoBehaviour
         {
             RaycastHit2D raycastHit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, clickLayer);
             if (raycastHit)
-            {
-                ClearSelect();
-                selecterInstance = Instantiate(selecter, raycastHit.transform);
-                selecterInstance.transform.localScale = new Vector3(selectRange, selectRange, 1f);
-                ChangeableObject changeableObject = raycastHit.transform.GetComponent<ChangeableObject>();
-                selectedObjects.Add(changeableObject);
-                changeableObject.OnSelected();
-            }
+                Select(raycastHit.transform);
         }
     }
 
@@ -51,15 +50,28 @@ public class InputController : MonoBehaviour
         }
     }
 
+    private void Select(Transform selected)
+    {
+        ClearSelect();
+        if (selected == transform)
+            selfSelected = true;
+        selecterInstance = Instantiate(selecter, selected);
+        selecterInstance.transform.localScale = new Vector3(selectRange, selectRange, 1f);
+        ChangeableObject changeableObject = selected.transform.GetComponent<ChangeableObject>();
+        selectedObjects.Add(changeableObject);
+        changeableObject.OnSelected();
+    }
+
     private void ClearSelect()
     {
         if (selecterInstance)
             Destroy(selecterInstance);
-        if(selectedObjects.Count != 0)
+        if (selectedObjects.Count != 0)
         {
             foreach (ChangeableObject obj in selectedObjects)
                 obj.OnDisselected();
             selectedObjects.Clear();
+            selfSelected = false;
         }
     }
 

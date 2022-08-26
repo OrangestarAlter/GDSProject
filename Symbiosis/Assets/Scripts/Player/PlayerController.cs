@@ -30,12 +30,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
-        Jump();
-    }
-
-    private void Move()
-    {
         if (Input.GetKeyDown(KeyCode.D))
         {
             rightDown = true;
@@ -68,11 +62,21 @@ public class PlayerController : MonoBehaviour
         else
             moveDir = 0;
 
+        Jump();
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
+    }
+
+    private void Move()
+    {
         if (IsOnGround())
             rigid.velocity = new Vector2(moveDir * moveSpeed, rigid.velocity.y);
         else
         {
-            rigid.velocity += new Vector2(moveDir * moveSpeed * jumpingControl * Time.deltaTime, 0);
+            rigid.velocity += new Vector2(moveDir * moveSpeed * jumpingControl * Time.fixedDeltaTime, 0);
             rigid.velocity = new Vector2(Mathf.Clamp(rigid.velocity.x, -moveSpeed, moveSpeed), rigid.velocity.y);
         }
         if (rigid.velocity.x > 0.01)
@@ -96,5 +100,12 @@ public class PlayerController : MonoBehaviour
         bool isOnGround = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, platformLayer);
         animator.SetBool("isOnGround", isOnGround);
         return isOnGround;
+    }
+
+    public void ChangeJumpValues(float jumpVelocity, float gravityScale, float jumpingControl)
+    {
+        this.jumpVelocity = jumpVelocity;
+        rigid.gravityScale = gravityScale;
+        this.jumpingControl = jumpingControl;
     }
 }
