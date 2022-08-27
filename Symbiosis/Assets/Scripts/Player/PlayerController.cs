@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float jumpVelocity = 5f;
-    [SerializeField] private float jumpingControl = 2.5f;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float jumpVelocity;
+    [SerializeField] private float jumpingControl;
+    [SerializeField] private float maxFallSpeed;
     [SerializeField] private LayerMask platformLayer;
     [SerializeField] private Transform playerSprite;
 
@@ -77,7 +78,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             rigid.velocity += new Vector2(moveDir * moveSpeed * jumpingControl * Time.fixedDeltaTime, 0);
-            rigid.velocity = new Vector2(Mathf.Clamp(rigid.velocity.x, -moveSpeed, moveSpeed), rigid.velocity.y);
+            rigid.velocity = new Vector2(Mathf.Clamp(rigid.velocity.x, -moveSpeed, moveSpeed), Mathf.Clamp(rigid.velocity.y, -maxFallSpeed, 100f));
         }
         if (rigid.velocity.x > 0.01)
             playerSprite.localScale = new Vector3(1f, 1f, 1f);
@@ -97,7 +98,8 @@ public class PlayerController : MonoBehaviour
 
     private bool IsOnGround()
     {
-        bool isOnGround = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, platformLayer);
+        Vector2 size = new Vector2(boxCollider.bounds.size.x, boxCollider.bounds.size.y * 0.5f);
+        bool isOnGround = Physics2D.BoxCast(boxCollider.bounds.center, size, 0, Vector2.down, size.y * 0.5f + 0.1f, platformLayer);
         animator.SetBool("isOnGround", isOnGround);
         return isOnGround;
     }
