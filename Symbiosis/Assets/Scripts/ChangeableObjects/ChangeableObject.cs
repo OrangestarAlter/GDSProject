@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class ChangeableObject : MonoBehaviour
 {
-    public int density;
+    public int density = 3;
 
     public void ChangeDensity(int d)
     {

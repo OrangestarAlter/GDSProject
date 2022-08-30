@@ -20,6 +20,11 @@ public class PlayerController : MonoBehaviour
     private bool leftDown = false;
     private bool movingRight = false;
     private bool movingLeft = false;
+    private bool canMove = true;
+    private bool isInSolid = false;
+    private bool isInLiquid = false;
+    private float moveMultiplier = 1f;
+    private float jumpMultiplier = 1f;
 
     private void Awake()
     {
@@ -63,26 +68,29 @@ public class PlayerController : MonoBehaviour
         else
             moveDir = 0;
 
-        Jump();
+        if (canMove)
+            Jump();
     }
 
     private void FixedUpdate()
     {
-        Move();
+        if (canMove)
+            Move();
     }
 
     private void Move()
     {
+        float speed = moveSpeed * moveMultiplier;
         if (IsOnGround())
-            rigid.velocity = new Vector2(moveDir * moveSpeed, rigid.velocity.y);
+            rigid.velocity = new Vector2(moveDir * speed, rigid.velocity.y);
         else
         {
-            rigid.velocity += new Vector2(moveDir * moveSpeed * jumpingControl * Time.fixedDeltaTime, 0);
-            rigid.velocity = new Vector2(Mathf.Clamp(rigid.velocity.x, -moveSpeed, moveSpeed), Mathf.Clamp(rigid.velocity.y, -maxFallSpeed, 100f));
+            rigid.velocity += new Vector2(moveDir * speed * jumpingControl * Time.fixedDeltaTime, 0);
+            rigid.velocity = new Vector2(Mathf.Clamp(rigid.velocity.x, -speed, speed), Mathf.Clamp(rigid.velocity.y, -maxFallSpeed, 100f));
         }
-        if (rigid.velocity.x > 0.01)
+        if (rigid.velocity.x > 0.01f)
             playerSprite.localScale = new Vector3(1f, 1f, 1f);
-        else if (rigid.velocity.x < -0.01)
+        else if (rigid.velocity.x < -0.01f)
             playerSprite.localScale = new Vector3(-1f, 1f, 1f);
         animator.SetFloat("speed", Mathf.Abs(rigid.velocity.x));
     }
@@ -91,7 +99,7 @@ public class PlayerController : MonoBehaviour
     {
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && IsOnGround())
         {
-            rigid.velocity = new Vector2(rigid.velocity.x, jumpVelocity);
+            rigid.velocity = new Vector2(rigid.velocity.x, jumpVelocity * jumpMultiplier);
             animator.Play("Jump");
         }
     }
@@ -109,5 +117,53 @@ public class PlayerController : MonoBehaviour
         this.jumpVelocity = jumpVelocity;
         rigid.gravityScale = gravityScale;
         this.jumpingControl = jumpingControl;
+    }
+
+    public void InSolid()
+    {
+        if (!isInSolid)
+        {
+            isInSolid = true;
+            canMove = false;
+            rigid.simulated = false;
+            boxCollider.isTrigger = true;
+            animator.speed = 0;
+        }
+    }
+
+    public void OutSolid()
+    {
+        if (isInSolid)
+        {
+            isInSolid = false;
+            canMove = true;
+            rigid.simulated = true;
+            boxCollider.isTrigger = false;
+            animator.speed = 1f;
+        }
+    }
+
+    public void InLiquid()
+    {
+        if (!isInLiquid)
+        {
+            isInLiquid = true;
+            rigid.drag = 5f;
+            moveMultiplier = 0.5f;
+            jumpMultiplier = 1.5f;
+            animator.speed = 0.5f;
+        }
+    }
+
+    public void OutLiquid()
+    {
+        if (isInLiquid)
+        {
+            isInLiquid = false;
+            rigid.drag = 0;
+            moveMultiplier = 1f;
+            jumpMultiplier = 1f;
+            animator.speed = 1f;
+        }
     }
 }
