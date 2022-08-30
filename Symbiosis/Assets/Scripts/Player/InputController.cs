@@ -11,12 +11,14 @@ public class InputController : MonoBehaviour
     [SerializeField] private GameObject selecter;
     [SerializeField] private float selectRange;
 
+    private Material selfMat;
     private GameObject selecterInstance;
     private bool selfSelected = false;
 
     private void Awake()
     {
         instance = this;
+        selfMat = transform.GetComponentInChildren<SpriteRenderer>().material;
     }
 
     // Update is called once per frame
@@ -54,7 +56,11 @@ public class InputController : MonoBehaviour
     {
         ClearSelect();
         if (selected == transform)
+        {
             selfSelected = true;
+            selfMat.SetVector("_color", new Vector3(1.0f, 0.0f, 0.0f));
+        }
+            
         selecterInstance = Instantiate(selecter, selected);
         selecterInstance.transform.localScale = new Vector3(selectRange, selectRange, 1f);
         ChangeableObject changeableObject = selected.transform.GetComponent<ChangeableObject>();
@@ -72,6 +78,7 @@ public class InputController : MonoBehaviour
                 obj.OnDisselected();
             selectedObjects.Clear();
             selfSelected = false;
+            selfMat.SetVector("_color", new Vector3(0.0f, 0.0f, 0.0f));
         }
     }
 

@@ -16,15 +16,16 @@ public class Substance : ChangeableObject
     [SerializeField] private int[] liquidDensity;
     [SerializeField] private int[] gasDensity;
     [SerializeField] private Physics physics;
+    private Material selfMat;
 
     public override void OnDisselected()
     {
-       
+        selfMat.SetVector("_color", new Vector3(0.0f, 0.0f, 0.0f));
     }
 
     public override void OnSelected()
     {
-        
+        selfMat.SetVector("_color", new Vector3(1.0f, 0.0f, 0.0f));
     }
 
     protected override void OnChangeDensity(int density)
@@ -34,6 +35,7 @@ public class Substance : ChangeableObject
                 if (i == density)
                 {
                     physicalState = PhysicalState.Solid;
+                    selfMat.SetFloat("_wave", 0f);
                     physics.TurnSolid();
                 }
         if (physicalState != PhysicalState.Liquid && liquidDensity.Length != 0)
@@ -42,12 +44,14 @@ public class Substance : ChangeableObject
                 {
                     physicalState = PhysicalState.Liquid;
                     physics.TurnLiquid();
+                    selfMat.SetFloat("_wave", 0.1f);
                 }
         if (physicalState != PhysicalState.Gas && gasDensity.Length != 0)
             foreach (int i in gasDensity)
                 if (i == density)
                 {
                     physicalState = PhysicalState.Gas;
+                    selfMat.SetFloat("_wave", 0f);
                     physics.TurnGas();
                 }
     }
@@ -56,6 +60,12 @@ public class Substance : ChangeableObject
     void Start()
     {
         
+        selfMat = transform.GetComponentInChildren<SpriteRenderer>().material;
+        if (physicalState == PhysicalState.Liquid)
+        {
+            selfMat.SetFloat("_wave", 0.1f);
+        }
+
     }
 
     // Update is called once per frame
