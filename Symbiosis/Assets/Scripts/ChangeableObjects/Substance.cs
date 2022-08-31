@@ -17,19 +17,37 @@ public class Substance : ChangeableObject
     [SerializeField] private int[] gasDensity;
     [SerializeField] private Physics physics;
 
+    [SerializeField] private Sprite solidSprite;
+    [SerializeField] private Sprite liquidSprite;
+    [SerializeField] private Sprite gasSprite;
+
+    private SpriteRenderer spriteRenderer;
     private Material material;
 
     private void Awake()
     {
-        material = physics.GetComponent<SpriteRenderer>().material;
+        spriteRenderer = physics.GetComponent<SpriteRenderer>();
+        material = spriteRenderer.material;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        if (physicalState == PhysicalState.Liquid)
+        switch (physicalState)
         {
-            material.SetFloat("_wave", 0.1f);
+            case PhysicalState.Solid:
+                spriteRenderer.sprite = solidSprite;
+                SetColorAlpha(0.9f);
+                break;
+            case PhysicalState.Liquid:
+                spriteRenderer.sprite = liquidSprite;
+                SetColorAlpha(0.5f);
+                material.SetFloat("_wave", 0.1f);
+                break;
+            case PhysicalState.Gas:
+                spriteRenderer.sprite = gasSprite;
+                SetColorAlpha(0.2f);
+                break;
         }
     }
 
@@ -51,6 +69,8 @@ public class Substance : ChangeableObject
                 {
                     physicalState = PhysicalState.Solid;
                     physics.TurnSolid();
+                    spriteRenderer.sprite = solidSprite;
+                    SetColorAlpha(0.9f);
                     material.SetFloat("_wave", 0f);
                 }
         if (physicalState != PhysicalState.Liquid && liquidDensity.Length != 0)
@@ -59,6 +79,8 @@ public class Substance : ChangeableObject
                 {
                     physicalState = PhysicalState.Liquid;
                     physics.TurnLiquid();
+                    spriteRenderer.sprite = liquidSprite;
+                    SetColorAlpha(0.5f);
                     material.SetFloat("_wave", 0.1f);
                 }
         if (physicalState != PhysicalState.Gas && gasDensity.Length != 0)
@@ -67,7 +89,15 @@ public class Substance : ChangeableObject
                 {
                     physicalState = PhysicalState.Gas;
                     physics.TurnGas();
+                    spriteRenderer.sprite = gasSprite;
+                    SetColorAlpha(0.2f);
                     material.SetFloat("_wave", 0f);
                 }
+    }
+
+    private void SetColorAlpha(float alpha)
+    {
+        Color motoColor = spriteRenderer.color;
+        spriteRenderer.color = new Color(motoColor.r, motoColor.g, motoColor.b, alpha);
     }
 }

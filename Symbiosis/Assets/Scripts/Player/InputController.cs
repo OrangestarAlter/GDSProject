@@ -6,11 +6,11 @@ public class InputController : MonoBehaviour
 {
     public static InputController instance;
 
-    public List<ChangeableObject> selectedObjects = new List<ChangeableObject>();
     [SerializeField] private LayerMask clickLayer;
     [SerializeField] private GameObject selecter;
     [SerializeField] private float selectRange;
 
+    private List<ChangeableObject> selectedObjects = new List<ChangeableObject>();
     private GameObject selecterInstance;
     private bool selfSelected = false;
 
@@ -71,8 +71,8 @@ public class InputController : MonoBehaviour
             foreach (ChangeableObject obj in selectedObjects)
                 obj.OnDisselected();
             selectedObjects.Clear();
-            selfSelected = false;
         }
+        selfSelected = false;
     }
 
     private void SelectDensity()
@@ -97,5 +97,17 @@ public class InputController : MonoBehaviour
                 obj.ChangeDensity(density);
             ClearSelect();
         }
+    }
+
+    public void AddSelected(ChangeableObject obj)
+    {
+        if (!selectedObjects.Contains(obj))
+            selectedObjects.Add(obj);
+    }
+
+    public void RemoveSelected(ChangeableObject obj)
+    {
+        if (selectedObjects.Contains(obj))
+            selectedObjects.Remove(obj);
     }
 }

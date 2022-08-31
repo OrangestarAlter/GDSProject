@@ -11,7 +11,7 @@ public class Selecter : MonoBehaviour
         if ((selectLayer.value & (1 << collision.gameObject.layer)) > 0)
         {
             ChangeableObject changeableObject = collision.GetComponent<ChangeableObject>();
-            InputController.instance.selectedObjects.Add(changeableObject);
+            InputController.instance.AddSelected(changeableObject);
             changeableObject.OnSelected();
         }
     }
@@ -21,7 +21,7 @@ public class Selecter : MonoBehaviour
         if ((selectLayer.value & (1 << collision.gameObject.layer)) > 0)
         {
             ChangeableObject changeableObject = collision.GetComponent<ChangeableObject>();
-            InputController.instance.selectedObjects.Remove(changeableObject);
+            InputController.instance.RemoveSelected(changeableObject);
             changeableObject.OnDisselected();
         }
     }

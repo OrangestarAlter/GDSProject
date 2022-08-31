@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Physics : MonoBehaviour
 {
-    public List<Transform> insideObjects = new List<Transform>();
+    private List<Transform> insideObjects = new List<Transform>();
     private BoxCollider2D boxCollider;
 
     private void Awake()
