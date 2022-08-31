@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
+
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpVelocity;
     [SerializeField] private float jumpingControl;
@@ -28,6 +30,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         rigid = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         animator = playerSprite.GetComponent<Animator>();

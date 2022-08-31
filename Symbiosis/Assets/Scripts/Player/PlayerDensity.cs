@@ -6,17 +6,23 @@ public class PlayerDensity : ChangeableObject
 {
     [SerializeField] private Vector3[] jumpValues;
 
-    private SpriteRenderer spriteRenderer;
     private PlayerController playerController;
+    private Material material;
 
-    public override void OnDisselected()
+    private void Awake()
     {
-        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
+        playerController = GetComponent<PlayerController>();
+        material = GetComponentInChildren<SpriteRenderer>().material;
     }
 
     public override void OnSelected()
     {
-        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.5f);
+        material.SetVector("_color", new Vector3(1.0f, 0.0f, 0.0f));
+    }
+
+    public override void OnDisselected()
+    {
+        material.SetVector("_color", new Vector3(0.0f, 0.0f, 0.0f));
     }
 
     protected override void OnChangeDensity(int density)
@@ -39,11 +45,5 @@ public class PlayerDensity : ChangeableObject
                 playerController.ChangeJumpValues(jumpValues[4].x, jumpValues[4].y, jumpValues[4].z);
                 break;
         }
-    }
-
-    private void Awake()
-    {
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        playerController = GetComponent<PlayerController>();
     }
 }

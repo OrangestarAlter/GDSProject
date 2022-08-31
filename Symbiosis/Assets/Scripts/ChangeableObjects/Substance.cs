@@ -16,16 +16,31 @@ public class Substance : ChangeableObject
     [SerializeField] private int[] liquidDensity;
     [SerializeField] private int[] gasDensity;
     [SerializeField] private Physics physics;
-    private Material selfMat;
 
-    public override void OnDisselected()
+    private Material material;
+
+    private void Awake()
     {
-        selfMat.SetVector("_color", new Vector3(0.0f, 0.0f, 0.0f));
+        material = physics.GetComponent<SpriteRenderer>().material;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        if (physicalState == PhysicalState.Liquid)
+        {
+            material.SetFloat("_wave", 0.1f);
+        }
     }
 
     public override void OnSelected()
     {
-        selfMat.SetVector("_color", new Vector3(1.0f, 0.0f, 0.0f));
+        material.SetVector("_color", new Vector3(1.0f, 0.0f, 0.0f));
+    }
+
+    public override void OnDisselected()
+    {
+        material.SetVector("_color", new Vector3(0.0f, 0.0f, 0.0f));
     }
 
     protected override void OnChangeDensity(int density)
@@ -35,8 +50,8 @@ public class Substance : ChangeableObject
                 if (i == density)
                 {
                     physicalState = PhysicalState.Solid;
-                    selfMat.SetFloat("_wave", 0f);
                     physics.TurnSolid();
+                    material.SetFloat("_wave", 0f);
                 }
         if (physicalState != PhysicalState.Liquid && liquidDensity.Length != 0)
             foreach (int i in liquidDensity)
@@ -44,33 +59,15 @@ public class Substance : ChangeableObject
                 {
                     physicalState = PhysicalState.Liquid;
                     physics.TurnLiquid();
-                    selfMat.SetFloat("_wave", 0.1f);
+                    material.SetFloat("_wave", 0.1f);
                 }
         if (physicalState != PhysicalState.Gas && gasDensity.Length != 0)
             foreach (int i in gasDensity)
                 if (i == density)
                 {
                     physicalState = PhysicalState.Gas;
-                    selfMat.SetFloat("_wave", 0f);
                     physics.TurnGas();
+                    material.SetFloat("_wave", 0f);
                 }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-        selfMat = transform.GetComponentInChildren<SpriteRenderer>().material;
-        if (physicalState == PhysicalState.Liquid)
-        {
-            selfMat.SetFloat("_wave", 0.1f);
-        }
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

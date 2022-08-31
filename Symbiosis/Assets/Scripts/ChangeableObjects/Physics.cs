@@ -4,24 +4,12 @@ using UnityEngine;
 
 public class Physics : MonoBehaviour
 {
-    private List<Transform> insideObjects = new List<Transform>();
+    public List<Transform> insideObjects = new List<Transform>();
     private BoxCollider2D boxCollider;
 
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider2D>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void TurnSolid()
@@ -80,22 +68,24 @@ public class Physics : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            insideObjects.Add(collision.transform);
-            if (gameObject.layer == 8)
-                collision.GetComponent<PlayerController>().InLiquid();
-        }
+        if (gameObject.layer != 7)
+            if (collision.CompareTag("Player"))
+            {
+                if (!insideObjects.Contains(collision.transform))
+                    insideObjects.Add(collision.transform);
+                if (gameObject.layer == 8)
+                    collision.GetComponent<PlayerController>().InLiquid();
+            }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (gameObject.layer != 7)
-            if (collision.CompareTag("Player"))
-            {
+        {
+            if (insideObjects.Contains(collision.transform))
                 insideObjects.Remove(collision.transform);
-                if (gameObject.layer == 8)
-                    collision.GetComponent<PlayerController>().OutLiquid();
-            }
+            if (gameObject.layer == 8 && collision.CompareTag("Player"))
+                collision.GetComponent<PlayerController>().OutLiquid();
+        }
     }
 }
