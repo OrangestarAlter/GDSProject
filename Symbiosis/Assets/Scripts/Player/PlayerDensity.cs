@@ -18,11 +18,15 @@ public class PlayerDensity : ChangeableObject
     public override void OnSelected()
     {
         material.SetVector("_color", new Vector3(1.0f, 0.0f, 0.0f));
+        material.SetVector("_leftRight", new Vector2(0.002f, 0.0f));
+        material.SetVector("_upDown", new Vector2(0.0f, 0.002f));
     }
 
     public override void OnDisselected()
     {
         material.SetVector("_color", new Vector3(0.0f, 0.0f, 0.0f));
+        material.SetVector("_leftRight", new Vector2(0.0f, 0.0f));
+        material.SetVector("_upDown", new Vector2(0.0f, 0.0f));
     }
 
     protected override void OnChangeDensity(int density)
