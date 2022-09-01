@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerSprite : MonoBehaviour
 {
     [SerializeField] private Vector3[] shakeValue;
+    [SerializeField] private LayerMask hitLayer;
     
     private PlayerDensity density;
 
@@ -23,6 +24,17 @@ public class PlayerSprite : MonoBehaviour
             case 2:
                 CameraController.instance.ShakeCamera(shakeValue[1].x, shakeValue[1].y, shakeValue[1].z);
                 break;
+        }
+    }
+
+    public void BreakTerrain()
+    {
+        if (density.density <= 2)
+        {
+            RaycastHit2D raycastHit = Physics2D.Raycast(transform.parent.position, Vector2.down, Mathf.Infinity, hitLayer);
+            if (raycastHit)
+                if (raycastHit.transform.CompareTag("Breakable"))
+                    raycastHit.transform.GetComponent<BreakableObject>().Break(density.density);
         }
     }
 }

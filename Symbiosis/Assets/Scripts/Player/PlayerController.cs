@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,17 +17,22 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigid;
     private BoxCollider2D boxCollider;
     private Animator animator;
+    private SpriteRenderer spriteRenderer;
 
+    public bool canMove = true;
     private int moveDir = 0;
     private bool rightDown = false;
     private bool leftDown = false;
     private bool movingRight = false;
     private bool movingLeft = false;
-    private bool canMove = true;
     private bool isInSolid = false;
     private bool isInLiquid = false;
     private float moveMultiplier = 1f;
     private float jumpMultiplier = 1f;
+    private bool isDead = false;
+    private bool isSuffocating = false;
+    private float blinkTimer = 0;
+    private float dieTimer = 0;
 
     private void Awake()
     {
@@ -34,6 +40,13 @@ public class PlayerController : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         animator = playerSprite.GetComponent<Animator>();
+        spriteRenderer = playerSprite.GetComponent<SpriteRenderer>();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        transform.position = RespawnPosition.instance.transform.position;
     }
 
     // Update is called once per frame
@@ -73,6 +86,24 @@ public class PlayerController : MonoBehaviour
 
         if (canMove)
             Jump();
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Die();
+        }
+
+        if (isSuffocating)
+        {
+            blinkTimer += Time.deltaTime;
+            if (blinkTimer >= 0.1f)
+            {
+                SetSpriteAlpha(Mathf.Abs(spriteRenderer.color.a - 1f));
+                blinkTimer = 0;
+            }
+            dieTimer += Time.deltaTime;
+            if (dieTimer >= 5f)
+                Die();
+        }
     }
 
     private void FixedUpdate()
@@ -131,10 +162,11 @@ public class PlayerController : MonoBehaviour
             rigid.simulated = false;
             boxCollider.isTrigger = true;
             animator.speed = 0;
+            isSuffocating = true;
         }
     }
 
-    public void OutSolid()
+    public void OutSolid(bool inAir)
     {
         if (isInSolid)
         {
@@ -143,6 +175,12 @@ public class PlayerController : MonoBehaviour
             rigid.simulated = true;
             boxCollider.isTrigger = false;
             animator.speed = 1f;
+            if (inAir)
+            {
+                isSuffocating = false;
+                SetSpriteAlpha(1f);
+                dieTimer = 0;
+            }
         }
     }
 
@@ -153,12 +191,13 @@ public class PlayerController : MonoBehaviour
             isInLiquid = true;
             rigid.drag = 5f;
             moveMultiplier = 0.5f;
-            jumpMultiplier = 1.5f;
+            jumpMultiplier = 2f;
             animator.speed = 0.5f;
+            isSuffocating = true;
         }
     }
 
-    public void OutLiquid()
+    public void OutLiquid(bool inAir)
     {
         if (isInLiquid)
         {
@@ -167,6 +206,44 @@ public class PlayerController : MonoBehaviour
             moveMultiplier = 1f;
             jumpMultiplier = 1f;
             animator.speed = 1f;
+            if (inAir)
+            {
+                isSuffocating = false;
+                SetSpriteAlpha(1f);
+                dieTimer = 0;
+            }
         }
+    }
+
+    public void Die()
+    {
+        if (!isDead)
+        {
+            isDead = true;
+            rigid.simulated = false;
+            boxCollider.enabled = false;
+            canMove = false;
+            InputController.instance.canInput = false;
+            animator.speed = 0;
+            StartCoroutine(Dying(0.5f));
+        }
+    }
+
+    IEnumerator Dying(float duration)
+    {
+        float timer = 0;
+        while (timer < duration)
+        {
+            SetSpriteAlpha(Mathf.Lerp(1f, 0, timer / duration));
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        SetSpriteAlpha(0);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void SetSpriteAlpha(float alpha)
+    {
+        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, alpha);
     }
 }

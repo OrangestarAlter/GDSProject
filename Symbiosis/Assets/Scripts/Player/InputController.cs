@@ -10,6 +10,7 @@ public class InputController : MonoBehaviour
     [SerializeField] private GameObject selecter;
     [SerializeField] private float selectRange;
 
+    public bool canInput = true;
     private List<ChangeableObject> selectedObjects = new List<ChangeableObject>();
     private GameObject selecterInstance;
     private bool selfSelected = false;
@@ -22,14 +23,17 @@ public class InputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-            if (!selfSelected)
-                Select(transform);
-            else
-                ClearSelect();
-        LeftClick();
-        RightClick();
-        SelectDensity();
+        if (canInput)
+        {
+            if (Input.GetKeyDown(KeyCode.S))
+                if (!selfSelected)
+                    Select(transform);
+                else
+                    ClearSelect();
+            LeftClick();
+            RightClick();
+            SelectDensity();
+        }
     }
 
     private void LeftClick()
