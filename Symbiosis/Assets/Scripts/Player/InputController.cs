@@ -10,7 +10,8 @@ public class InputController : MonoBehaviour
     [SerializeField] private GameObject selecter;
     [SerializeField] private float selectRange;
 
-    public bool canInput = true;
+    public bool canInput = false;
+    public bool haveRelic = true;
     private List<ChangeableObject> selectedObjects = new List<ChangeableObject>();
     private GameObject selecterInstance;
     private bool selfSelected = false;

@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private SpriteRenderer spriteRenderer;
 
-    public bool canMove = true;
+    public bool canMove = false;
     private int moveDir = 0;
     private bool rightDown = false;
     private bool leftDown = false;
@@ -85,11 +85,10 @@ public class PlayerController : MonoBehaviour
             moveDir = 0;
 
         if (canMove)
-            Jump();
-
-        if (Input.GetKeyDown(KeyCode.R))
         {
-            Die();
+            Jump();
+            if (Input.GetKeyDown(KeyCode.R) && InputController.instance.canInput)
+                Die();
         }
 
         if (isSuffocating)

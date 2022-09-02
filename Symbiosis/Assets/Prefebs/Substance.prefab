@@ -73,9 +73,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   density: 3
   physicalState: 1
-  solidDensity: 04000000
-  liquidDensity: 010000000200000003000000
-  gasDensity: 05000000
+  solidDensity: 02000000
+  liquidDensity: 030000000400000005000000
+  gasDensity: 01000000
   physics: {fileID: 5865138446722121281}
   solidSprite: {fileID: 21300000, guid: 0a50dbd2cc21c2541bb738cfdabd9b7e, type: 3}
   liquidSprite: {fileID: 21300000, guid: 0a50dbd2cc21c2541bb738cfdabd9b7e, type: 3}

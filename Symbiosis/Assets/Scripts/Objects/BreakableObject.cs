@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BreakableObject : MonoBehaviour
 {
-    public int breakLevel = 1;
+    public int breakLevel = 4;
 
     public void Break(int density)
     {
-        if (density <= breakLevel)
+        if (density >= breakLevel)
         {
             CameraController.instance.ShakeCamera(5f, 5f, 0.5f);
             Destroy(gameObject);

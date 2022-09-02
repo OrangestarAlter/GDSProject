@@ -18,10 +18,10 @@ public class PlayerSprite : MonoBehaviour
     {
         switch (density.density)
         {
-            case 1:
+            case 5:
                 CameraController.instance.ShakeCamera(shakeValue[0].x, shakeValue[0].y, shakeValue[0].z);
                 break;
-            case 2:
+            case 4:
                 CameraController.instance.ShakeCamera(shakeValue[1].x, shakeValue[1].y, shakeValue[1].z);
                 break;
         }
@@ -29,7 +29,7 @@ public class PlayerSprite : MonoBehaviour
 
     public void BreakTerrain()
     {
-        if (density.density <= 2)
+        if (density.density >= 4)
         {
             RaycastHit2D raycastHit = Physics2D.Raycast(transform.parent.position, Vector2.down, Mathf.Infinity, hitLayer);
             if (raycastHit)
