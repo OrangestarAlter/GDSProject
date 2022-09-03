@@ -62,7 +62,11 @@ Material:
     m_Floats:
     - Vector1_5621fbe907de4d1fab04c70d55e77508: 1
     - Vector1_653db821953045eab515ad82b99085fb: 0
+    - Vector1_96be7755054846a8b6b93aef7fe93d7d: 0
+    - Vector1_b2586274943c4eca97eff3f202a051fb: 0.2
     - _EnableExternalAlpha: 0
+    - _alpha: 1
+    - _isFog: 0
     - _wave: 0
     m_Colors:
     - Vector2_bd1bad29d996468daf4adb834970f08d: {r: -2.73, g: 0, b: 0, a: 0}
@@ -71,4 +75,7 @@ Material:
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _color: {r: 1.6, g: 0, b: 0, a: 0}
+    - _leftRight: {r: 0, g: 0, b: 0, a: 0}
+    - _test: {r: 4.9, g: 1.68, b: 0, a: 0}
+    - _upDown: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

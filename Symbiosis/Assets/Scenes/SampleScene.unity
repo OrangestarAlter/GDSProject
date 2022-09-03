@@ -2274,7 +2274,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0.70614433, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1705133730}
@@ -3487,6 +3487,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5865138446722121280, guid: a78210b21fa4ce44e8bbb7006c5b2208, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5865138446722121280, guid: a78210b21fa4ce44e8bbb7006c5b2208, type: 3}
       propertyPath: m_Color.g
       value: 0.6117647
       objectReference: {fileID: 0}
@@ -3500,7 +3504,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5865138446722121286, guid: a78210b21fa4ce44e8bbb7006c5b2208, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4
+      value: 3.4076
+      objectReference: {fileID: 0}
+    - target: {fileID: 5865138446722121286, guid: a78210b21fa4ce44e8bbb7006c5b2208, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.2962
       objectReference: {fileID: 0}
     - target: {fileID: 5865138446722121287, guid: a78210b21fa4ce44e8bbb7006c5b2208, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
@@ -4131,7 +4139,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5865138446722121286, guid: a78210b21fa4ce44e8bbb7006c5b2208, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4
+      value: 3.2916
+      objectReference: {fileID: 0}
+    - target: {fileID: 5865138446722121286, guid: a78210b21fa4ce44e8bbb7006c5b2208, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.3543
       objectReference: {fileID: 0}
     - target: {fileID: 5865138446722121287, guid: a78210b21fa4ce44e8bbb7006c5b2208, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
@@ -4557,7 +4569,7 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_LightVolumeOpacity: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 85e41b9e0000000051e27b4fc1d54127b94026e0
   m_LightCookieSprite: {fileID: 0}
   m_UseNormalMap: 0
   m_LightOrder: 0
@@ -17840,7 +17852,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5865138446722121286, guid: a78210b21fa4ce44e8bbb7006c5b2208, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4
+      value: 3.4804
+      objectReference: {fileID: 0}
+    - target: {fileID: 5865138446722121286, guid: a78210b21fa4ce44e8bbb7006c5b2208, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.2598
       objectReference: {fileID: 0}
     - target: {fileID: 5865138446722121287, guid: a78210b21fa4ce44e8bbb7006c5b2208, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x

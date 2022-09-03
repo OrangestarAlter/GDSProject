@@ -37,16 +37,17 @@ public class Substance : ChangeableObject
         {
             case PhysicalState.Solid:
                 spriteRenderer.sprite = solidSprite;
-                SetColorAlpha(0.9f);
+                material.SetFloat("_alpha", 0.9f);
                 break;
             case PhysicalState.Liquid:
                 spriteRenderer.sprite = liquidSprite;
-                SetColorAlpha(0.5f);
+                material.SetFloat("_alpha", 0.5f);
                 material.SetFloat("_wave", 0.1f);
                 break;
             case PhysicalState.Gas:
                 spriteRenderer.sprite = gasSprite;
-                SetColorAlpha(0.2f);
+                material.SetFloat("_alpha", 0.2f);
+                material.SetFloat("_isFog", 1f);
                 break;
         }
     }
@@ -70,8 +71,9 @@ public class Substance : ChangeableObject
                     physicalState = PhysicalState.Solid;
                     physics.TurnSolid();
                     spriteRenderer.sprite = solidSprite;
-                    SetColorAlpha(0.9f);
+                    material.SetFloat("_alpha", 0.9f);
                     material.SetFloat("_wave", 0f);
+                    material.SetFloat("_isFog", 0f);
                 }
         if (physicalState != PhysicalState.Liquid && liquidDensity.Length != 0)
             foreach (int i in liquidDensity)
@@ -80,8 +82,9 @@ public class Substance : ChangeableObject
                     physicalState = PhysicalState.Liquid;
                     physics.TurnLiquid();
                     spriteRenderer.sprite = liquidSprite;
-                    SetColorAlpha(0.5f);
+                    material.SetFloat("_alpha", 0.5f);
                     material.SetFloat("_wave", 0.1f);
+                    material.SetFloat("_isFog", 0f);
                 }
         if (physicalState != PhysicalState.Gas && gasDensity.Length != 0)
             foreach (int i in gasDensity)
@@ -90,8 +93,9 @@ public class Substance : ChangeableObject
                     physicalState = PhysicalState.Gas;
                     physics.TurnGas();
                     spriteRenderer.sprite = gasSprite;
-                    SetColorAlpha(0.2f);
+                    material.SetFloat("_alpha", 0.2f);
                     material.SetFloat("_wave", 0f);
+                    material.SetFloat("_isFog", 1f);
                 }
     }
 
