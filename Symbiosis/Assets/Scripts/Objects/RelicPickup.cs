@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
-public class Relic : MonoBehaviour
+public class RelicPickup : MonoBehaviour
 {
-    public static Relic instance;
+    public static RelicPickup instance;
 
     [SerializeField] private GameObject tutorial;
+    [SerializeField] private GameObject relic;
 
-    private SpriteRenderer spriteRenderer;
-    private BoxCollider2D boxCollider;
     private bool canPickup = false;
+    private Light2D light2d;
+    private float timer = 0;
+    private int sign = 1;
 
     private void Awake()
     {
@@ -18,8 +21,7 @@ public class Relic : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
             instance = this;
-            spriteRenderer = GetComponent<SpriteRenderer>();
-            boxCollider = GetComponent<BoxCollider2D>();
+            light2d = GetComponent<Light2D>();
         }
         else
         {
@@ -32,6 +34,7 @@ public class Relic : MonoBehaviour
     void Start()
     {
         InputController.instance.haveRelic = false;
+        relic.SetActive(false);
     }
 
     // Update is called once per frame
@@ -40,10 +43,22 @@ public class Relic : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && canPickup)
         {
             InputController.instance.canInput = InputController.instance.haveRelic = true;
-            spriteRenderer.sprite = null;
-            boxCollider.enabled = false;
+            relic.SetActive(true);
             tutorial.SetActive(true);
+            gameObject.SetActive(false);
         }
+    }
+
+    private void FixedUpdate()
+    {
+        timer += Time.fixedDeltaTime;
+        if (timer >= 2f)
+        {
+            sign *= -1;
+            timer = 0;
+        }
+        light2d.intensity += sign * 0.25f * Time.fixedDeltaTime;
+        light2d.pointLightOuterRadius += sign * 5f * Time.fixedDeltaTime;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

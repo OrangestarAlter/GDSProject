@@ -101,6 +101,7 @@ public class InputController : MonoBehaviour
             foreach (ChangeableObject obj in selectedObjects)
                 obj.ChangeDensity(density);
             ClearSelect();
+            Relic.instance.Flash();
         }
     }
 

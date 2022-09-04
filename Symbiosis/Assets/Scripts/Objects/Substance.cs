@@ -41,12 +41,12 @@ public class Substance : ChangeableObject
                 break;
             case PhysicalState.Liquid:
                 spriteRenderer.sprite = liquidSprite;
-                material.SetFloat("_alpha", 0.5f);
+                material.SetFloat("_alpha", 0.6f);
                 material.SetFloat("_wave", 0.1f);
                 break;
             case PhysicalState.Gas:
                 spriteRenderer.sprite = gasSprite;
-                material.SetFloat("_alpha", 0.2f);
+                material.SetFloat("_alpha", 0.3f);
                 material.SetFloat("_isFog", 1f);
                 break;
         }
@@ -82,7 +82,7 @@ public class Substance : ChangeableObject
                     physicalState = PhysicalState.Liquid;
                     physics.TurnLiquid();
                     spriteRenderer.sprite = liquidSprite;
-                    material.SetFloat("_alpha", 0.5f);
+                    material.SetFloat("_alpha", 0.6f);
                     material.SetFloat("_wave", 0.1f);
                     material.SetFloat("_isFog", 0f);
                 }
@@ -93,7 +93,7 @@ public class Substance : ChangeableObject
                     physicalState = PhysicalState.Gas;
                     physics.TurnGas();
                     spriteRenderer.sprite = gasSprite;
-                    material.SetFloat("_alpha", 0.2f);
+                    material.SetFloat("_alpha", 0.3f);
                     material.SetFloat("_wave", 0f);
                     material.SetFloat("_isFog", 1f);
                 }
