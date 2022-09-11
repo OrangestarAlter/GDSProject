@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+    [SerializeField] private float key;
     [SerializeField] private Sprite openSprite;
     [SerializeField] private GameObject tutorial;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && Inventory.instance.key)
+        if (collision.CompareTag("Player") && Inventory.instance.HaveKey(key))
         {
+            Inventory.instance.RemoveKey(key);
             GetComponent<SpriteRenderer>().sprite = openSprite;
-            tutorial.SetActive(true);
+            GetComponent<BoxCollider2D>().enabled = false;
+            if (tutorial)
+                tutorial.SetActive(true);
         }
     }
 }
