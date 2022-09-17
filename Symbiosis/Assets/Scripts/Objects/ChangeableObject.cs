@@ -4,12 +4,17 @@ using UnityEngine;
 
 public abstract class ChangeableObject : MonoBehaviour
 {
-    public int density = 3;
+    public int density = 0;
 
-    public void ChangeDensity(int d)
+    public void ChangeDensity(int i)
     {
-        density = d;
-        OnChangeDensity(density);
+        density += i;
+        if (density > 2)
+            density = 2;
+        else if (density < -2)
+            density = -2;
+        else
+            OnChangeDensity(density);
     }
 
     protected abstract void OnChangeDensity(int density);

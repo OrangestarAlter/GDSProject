@@ -16,6 +16,7 @@ public class Substance : ChangeableObject
     [SerializeField] private int[] liquidDensity;
     [SerializeField] private int[] gasDensity;
     [SerializeField] private Physics physics;
+    [SerializeField] private DensityUI densityUI;
 
     [SerializeField] private Sprite solidSprite;
     [SerializeField] private Sprite liquidSprite;
@@ -55,11 +56,14 @@ public class Substance : ChangeableObject
     public override void OnSelected()
     {
         material.SetVector("_color", new Vector3(1.0f, 0.0f, 0.0f));
+        densityUI.gameObject.SetActive(true);
+        densityUI.SetDensityUI(density, solidDensity, liquidDensity, gasDensity);
     }
 
     public override void OnDisselected()
     {
         material.SetVector("_color", new Vector3(0.0f, 0.0f, 0.0f));
+        densityUI.gameObject.SetActive(false);
     }
 
     protected override void OnChangeDensity(int density)
@@ -97,6 +101,7 @@ public class Substance : ChangeableObject
                     material.SetFloat("_wave", 0f);
                     material.SetFloat("_isFog", 1f);
                 }
+        densityUI.SetDensityUI(density, solidDensity, liquidDensity, gasDensity);
     }
 
     private void SetColorAlpha(float alpha)

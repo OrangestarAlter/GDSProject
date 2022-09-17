@@ -14,10 +14,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask platformLayer;
     [SerializeField] private Transform playerSprite;
 
+    [SerializeField] private AudioClip dieClip;
+
     private Rigidbody2D rigid;
     private BoxCollider2D boxCollider;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+    private AudioSource audioSource;
 
     public bool canMove = false;
     private int moveDir = 0;
@@ -41,6 +44,7 @@ public class PlayerController : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         animator = playerSprite.GetComponent<Animator>();
         spriteRenderer = playerSprite.GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -224,6 +228,7 @@ public class PlayerController : MonoBehaviour
             canMove = false;
             InputController.instance.canInput = false;
             animator.speed = 0;
+            audioSource.PlayOneShot(dieClip);
             StartCoroutine(Dying(0.5f));
         }
     }
@@ -238,6 +243,7 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         SetSpriteAlpha(0);
+        yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

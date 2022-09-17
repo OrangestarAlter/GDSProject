@@ -9,16 +9,27 @@ public class InputController : MonoBehaviour
     [SerializeField] private LayerMask clickLayer;
     [SerializeField] private GameObject selecter;
     [SerializeField] private float selectRange;
+    [SerializeField] private Texture2D cursorTexture;
+    [SerializeField] private GameObject flashEffect;
 
     public bool canInput = false;
     public bool haveRelic = true;
     private List<ChangeableObject> selectedObjects = new List<ChangeableObject>();
     private GameObject selecterInstance;
     private bool selfSelected = false;
+    private Vector2 cursorHotspot;
+    private float timer = 0;
 
     private void Awake()
     {
         instance = this;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        cursorHotspot = new Vector2(cursorTexture.width * 0.5f, cursorTexture.height * 0.5f);
+        SetRelicCursor();
     }
 
     // Update is called once per frame
@@ -82,26 +93,29 @@ public class InputController : MonoBehaviour
 
     private void SelectDensity()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            ChangeDensity(1);
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-            ChangeDensity(2);
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-            ChangeDensity(3);
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-            ChangeDensity(4);
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-            ChangeDensity(5);
+        timer += Time.deltaTime;
+        if (timer >= 0.5f)
+        {
+            if (Input.mouseScrollDelta.y > 0)
+            {
+                ChangeDensity(1);
+                timer = 0;
+            }
+            else if (Input.mouseScrollDelta.y < 0)
+            {
+                ChangeDensity(-1);
+                timer = 0;
+            }
+        }
     }
 
-    private void ChangeDensity(int density)
+    private void ChangeDensity(int i)
     {
         if (selectedObjects.Count != 0)
         {
             foreach (ChangeableObject obj in selectedObjects)
-                obj.ChangeDensity(density);
-            ClearSelect();
-            Relic.instance.Flash();
+                obj.ChangeDensity(i);
+            Instantiate(flashEffect, (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
         }
     }
 
@@ -115,5 +129,15 @@ public class InputController : MonoBehaviour
     {
         if (selectedObjects.Contains(obj))
             selectedObjects.Remove(obj);
+    }
+
+    public void SetRelicCursor()
+    {
+        Cursor.SetCursor(cursorTexture, cursorHotspot, CursorMode.Auto);
+    }
+
+    public void SetDefultCursor()
+    {
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
 }

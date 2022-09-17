@@ -5,21 +5,17 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class SavePoint : MonoBehaviour
 {
-    [SerializeField] private bool isDefault;
+    private Light2D light2d;
+    private AudioSource audioSource;
 
     private bool isActive = false;
-    private Light2D light2d;
     private float timer = 0;
     private int sign = 1;
 
     private void Awake()
     {
         light2d = GetComponent<Light2D>();
-        if (isDefault && RespawnPosition.instance)
-        {
-            RespawnPosition.instance.SetRespawnPosition(transform.position);
-            SetActiveLight();
-        }
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
@@ -56,11 +52,15 @@ public class SavePoint : MonoBehaviour
 
     private void SetActiveLight()
     {
-        isActive = true;
-        light2d.color = new Color(1f, 0, 1f);
-        light2d.pointLightInnerRadius = 1f;
-        light2d.pointLightOuterRadius = 3f;
-        light2d.intensity = 2f;
+        if (!isActive)
+        {
+            isActive = true;
+            light2d.color = new Color(1f, 0, 1f);
+            light2d.pointLightInnerRadius = 1f;
+            light2d.pointLightOuterRadius = 3f;
+            light2d.intensity = 2f;
+            audioSource.Play();
+        }
     }
 
     private void SetBreathLight()

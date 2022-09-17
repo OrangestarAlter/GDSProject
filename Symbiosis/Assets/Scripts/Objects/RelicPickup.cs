@@ -8,7 +8,6 @@ public class RelicPickup : MonoBehaviour
     public static RelicPickup instance;
 
     [SerializeField] private GameObject tutorial;
-    [SerializeField] private GameObject relic;
 
     private bool canPickup = false;
     private Light2D light2d;
@@ -34,7 +33,7 @@ public class RelicPickup : MonoBehaviour
     void Start()
     {
         InputController.instance.haveRelic = false;
-        relic.SetActive(false);
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -43,7 +42,7 @@ public class RelicPickup : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && canPickup)
         {
             InputController.instance.canInput = InputController.instance.haveRelic = true;
-            relic.SetActive(true);
+            Cursor.visible = true;
             tutorial.SetActive(true);
             gameObject.SetActive(false);
         }
