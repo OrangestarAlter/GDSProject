@@ -94,7 +94,7 @@ public class InputController : MonoBehaviour
     private void SelectDensity()
     {
         timer += Time.deltaTime;
-        if (timer >= 0.5f)
+        if (timer >= 0.25f)
         {
             if (Input.mouseScrollDelta.y > 0)
             {

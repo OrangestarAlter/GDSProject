@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
                 Die();
         }
 
-        if (isSuffocating)
+        if (isSuffocating && !isDead)
         {
             blinkTimer += Time.deltaTime;
             if (blinkTimer >= 0.1f)

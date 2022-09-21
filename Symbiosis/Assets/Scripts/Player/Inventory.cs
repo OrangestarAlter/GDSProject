@@ -13,14 +13,20 @@ public class Inventory : MonoBehaviour
         instance = this;
     }
 
-    public void AddKey(float key)
+    public void AddKey(float key, Color color)
     {
         keys.Add(key);
+        GameUI.instance.AddKey(color);
     }
 
     public void RemoveKey(float key)
     {
-        keys.Remove(key);
+        for (int i = 0; i < keys.Count; i++)
+            if (keys[i] == key)
+            {
+                keys.RemoveAt(i);
+                GameUI.instance.RemoveKey(i);
+            }
     }
 
     public bool HaveKey(float key)

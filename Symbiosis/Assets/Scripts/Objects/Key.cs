@@ -6,11 +6,14 @@ public class Key : MonoBehaviour
 {
     [SerializeField] private float key;
 
+    private bool added = false;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player"))
+        if (collision.transform.CompareTag("Player") && !added)
         {
-            Inventory.instance.AddKey(key);
+            added = true;
+            Inventory.instance.AddKey(key, GetComponent<SpriteRenderer>().color);
             Destroy(gameObject);
         }
     }

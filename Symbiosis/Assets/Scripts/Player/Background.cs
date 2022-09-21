@@ -19,7 +19,8 @@ public class Background : MonoBehaviour
         textureSizeY = sprite.texture.height / sprite.pixelsPerUnit;
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
         Vector3 temp = cameraTrans.position - lastCameraPos;
         transform.position += new Vector3(temp.x * followSpeed.x, temp.y * followSpeed.y, 0);

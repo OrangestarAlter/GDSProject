@@ -41,8 +41,9 @@ public class RelicPickup : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && canPickup)
         {
-            InputController.instance.canInput = InputController.instance.haveRelic = true;
             Cursor.visible = true;
+            InputController.instance.SetRelicCursor();
+            InputController.instance.canInput = InputController.instance.haveRelic = true;
             tutorial.SetActive(true);
             gameObject.SetActive(false);
         }

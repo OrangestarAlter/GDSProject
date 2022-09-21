@@ -79,9 +79,9 @@ MonoBehaviour:
   gasDensity: feffffff
   physics: {fileID: 5865138446722121281}
   densityUI: {fileID: 7250526749490383927}
-  solidSprite: {fileID: 21300000, guid: 0a50dbd2cc21c2541bb738cfdabd9b7e, type: 3}
-  liquidSprite: {fileID: 21300000, guid: 0a50dbd2cc21c2541bb738cfdabd9b7e, type: 3}
-  gasSprite: {fileID: 21300000, guid: 0a50dbd2cc21c2541bb738cfdabd9b7e, type: 3}
+  solidSprite: {fileID: 21300000, guid: 2df2cc62a22d04d49805a0e0a986c43e, type: 3}
+  liquidSprite: {fileID: 21300000, guid: fae42a1584486d24890623e6f227d9b5, type: 3}
+  gasSprite: {fileID: 21300000, guid: fdb6234a2b2bb154dbed14ed53d53e26, type: 3}
 --- !u!1 &5865138446722121285
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,14 +155,14 @@ SpriteRenderer:
   m_SortingLayerID: 658625985
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0a50dbd2cc21c2541bb738cfdabd9b7e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fae42a1584486d24890623e6f227d9b5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 2
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
+  m_SpriteTileMode: 1
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
@@ -181,13 +181,13 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.1875, y: 0.1875, z: 0.1875, w: 0.1875}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
+    drawMode: 2
+    adaptiveTiling: 1
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
