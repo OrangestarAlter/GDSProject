@@ -301,6 +301,7 @@ GameObject:
   - component: {fileID: 3382808084478665141}
   - component: {fileID: 3382808084478665138}
   - component: {fileID: 4400095456841342261}
+  - component: {fileID: 3104978567005033812}
   m_Layer: 0
   m_Name: PlayerSprite
   m_TagString: Untagged
@@ -515,6 +516,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!70 &3104978567005033812
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3382808084478665142}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.25}
+  m_Size: {x: 0.55, y: 1.3}
+  m_Direction: 0
 --- !u!1 &3382808084872082139
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,10 +544,9 @@ GameObject:
   - component: {fileID: 3382808084872082137}
   - component: {fileID: 3382808084872082132}
   - component: {fileID: 3382808084872082133}
+  - component: {fileID: 3382808084872082131}
   - component: {fileID: 3382808084872082135}
   - component: {fileID: 3382808084872082134}
-  - component: {fileID: 3382808084872082130}
-  - component: {fileID: 3382808084872082131}
   - component: {fileID: 1365094470001923737}
   m_Layer: 3
   m_Name: Player
@@ -593,7 +609,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2056
   selecter: {fileID: 7411197996565992695, guid: 538bd45408b300e4f88230f9e7fffc15, type: 3}
-  selectRange: 12
+  selectRange: 10
   cursorTexture: {fileID: 2800000, guid: 0876408bf0897cc4f9da6105cb740a53, type: 3}
   flashEffect: {fileID: 7419040731050803118, guid: 58ac15eef01c48042af94c284d9f4d57, type: 3}
   canInput: 0
@@ -619,6 +635,18 @@ MonoBehaviour:
   - {x: 7, y: 4, z: 0}
   densityUI: {fileID: 2559753719844902797}
   densityText: {fileID: 3015566665984610859}
+--- !u!114 &3382808084872082131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3382808084872082139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86426b10a9ced7142a90a0d6fd702348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!61 &3382808084872082135
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -666,34 +694,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &3382808084872082130
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3382808084872082139}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.15}
-  m_Size: {x: 0.55, y: 1}
-  m_Direction: 0
---- !u!114 &3382808084872082131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3382808084872082139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86426b10a9ced7142a90a0d6fd702348, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &1365094470001923737
 AudioSource:
   m_ObjectHideFlags: 0

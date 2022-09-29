@@ -123,8 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aabbda0856a51a478a1c5a344b91d8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 0.1
-  nextLevel: 2
+  key: 0
+  nextScene: 0
   openSprite: {fileID: 21300000, guid: 7c57302957ec968409345f64a02e93f6, type: 3}
   tips: {fileID: 7056107333710020863}
 --- !u!1 &7056107333710020863

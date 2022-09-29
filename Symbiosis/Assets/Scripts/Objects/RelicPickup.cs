@@ -32,8 +32,9 @@ public class RelicPickup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InputController.instance.haveRelic = false;
         Cursor.visible = false;
+        InputController.instance.haveRelic = false;
+        GameUI.instance.HideUI();
     }
 
     // Update is called once per frame
@@ -44,6 +45,7 @@ public class RelicPickup : MonoBehaviour
             Cursor.visible = true;
             InputController.instance.SetRelicCursor();
             InputController.instance.canInput = InputController.instance.haveRelic = true;
+            GameUI.instance.ShowUI();
             tutorial.SetActive(true);
             gameObject.SetActive(false);
         }

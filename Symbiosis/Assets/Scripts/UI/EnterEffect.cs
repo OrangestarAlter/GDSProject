@@ -31,5 +31,6 @@ public class EnterEffect : MonoBehaviour
         image.color = new Color(1f, 1f, 1f, 0);
         PlayerController.instance.canMove = true;
         InputController.instance.canInput = InputController.instance.haveRelic;
+        gameObject.SetActive(false);
     }
 }

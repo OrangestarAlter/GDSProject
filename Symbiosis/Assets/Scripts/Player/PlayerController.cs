@@ -228,6 +228,7 @@ public class PlayerController : MonoBehaviour
             canMove = false;
             InputController.instance.canInput = false;
             animator.speed = 0;
+            GameUI.instance.HideUI();
             audioSource.PlayOneShot(dieClip);
             StartCoroutine(Dying(0.5f));
         }

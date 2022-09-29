@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Breakable
   - RespawnPosition
+  - Relic
   layers:
   - Default
   - TransparentFX

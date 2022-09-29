@@ -33,7 +33,7 @@ public class RespawnPosition : MonoBehaviour
     private void OnSceneLoad(Scene arg0, LoadSceneMode arg1)
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        if (lastSceneIndex != currentSceneIndex)
+        if (currentSceneIndex != 0 && lastSceneIndex != currentSceneIndex)
         {
             lastSceneIndex = currentSceneIndex;
             SetRespawnPosition(GameObject.FindGameObjectWithTag("Player").transform.position);

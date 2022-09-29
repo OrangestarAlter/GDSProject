@@ -7,6 +7,8 @@ public class Inventory : MonoBehaviour
     public static Inventory instance;
 
     private List<float> keys = new List<float>();
+    public int keyCount = 0;
+    public int collectibleCount = 0;
 
     private void Awake()
     {
@@ -16,6 +18,7 @@ public class Inventory : MonoBehaviour
     public void AddKey(float key, Color color)
     {
         keys.Add(key);
+        keyCount++;
         GameUI.instance.AddKey(color);
     }
 
@@ -36,5 +39,10 @@ public class Inventory : MonoBehaviour
                 if (k == key)
                     return true;
         return false;
+    }
+
+    public void GetCollectible(float collectible)
+    {
+        GameUI.instance.ShowCollectible(collectible);
     }
 }

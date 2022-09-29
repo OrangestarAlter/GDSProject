@@ -6,18 +6,30 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
-    [SerializeField] private Button startButton;
+    public enum ButtonType
+    {
+        none,
+        levels,
+        newGame,
+        settings,
+        quit
+    }
+
     [SerializeField] private Button levelsButton;
+    [SerializeField] private Button newGameButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button quitButton;
 
-    [SerializeField] private GameObject startPage;
     [SerializeField] private GameObject levelsPage;
+    [SerializeField] private GameObject newGamePage;
     [SerializeField] private GameObject settingsPage;
     [SerializeField] private GameObject quitPage;
 
     [SerializeField] private AudioClip confirmClip;
     [SerializeField] private AudioClip cancelClip;
+
+    [SerializeField] private List<GameObject> levelButtons;
+    [SerializeField] private int allLevels;
 
     private AudioSource audioSource;
 
@@ -25,76 +37,48 @@ public class Menu : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-    }
-
-    public void NewGameButton()
-    {
-        levelsButton.interactable = true;
-        startButton.interactable = false;
-        settingsButton.interactable = true;
-        quitButton.interactable = true;
-        levelsPage.SetActive(false);
-        startPage.SetActive(true);
-        settingsPage.SetActive(false);
-        quitPage.SetActive(false);
+        if (PlayerPrefs.HasKey("Level1"))
+            levelsButton.gameObject.SetActive(true);
+        for (int i = 0; i < allLevels; i++)
+            if (PlayerPrefs.HasKey("Level" + i))
+                levelButtons[i].SetActive(true);
     }
 
     public void LevelsButton()
     {
-        levelsButton.interactable = false;
-        startButton.interactable = true;
-        settingsButton.interactable = true;
-        quitButton.interactable = true;
-        levelsPage.SetActive(true);
-        startPage.SetActive(false);
-        settingsPage.SetActive(false);
-        quitPage.SetActive(false);
+        ShowPage(ButtonType.levels);
+    }
+
+    public void NewGameButton()
+    {
+        ShowPage(ButtonType.newGame);
     }
 
     public void SettingsButton()
     {
-        levelsButton.interactable = true;
-        startButton.interactable = true;
-        settingsButton.interactable = false;
-        quitButton.interactable = true;
-        levelsPage.SetActive(false);
-        startPage.SetActive(false);
-        settingsPage.SetActive(true);
-        quitPage.SetActive(false);
+        ShowPage(ButtonType.settings);
     }
 
     public void QuitButton()
     {
-        levelsButton.interactable = true;
-        startButton.interactable = true;
-        settingsButton.interactable = true;
-        quitButton.interactable = false;
-        levelsPage.SetActive(false);
-        startPage.SetActive(false);
-        settingsPage.SetActive(false);
-        quitPage.SetActive(true);
+        ShowPage(ButtonType.quit);
     }
 
     public void BackButton()
     {
-        levelsButton.interactable = true;
-        startButton.interactable = true;
-        settingsButton.interactable = true;
-        quitButton.interactable = true;
-        levelsPage.SetActive(false);
-        startPage.SetActive(false);
-        settingsPage.SetActive(false);
-        quitPage.SetActive(false);
+        ShowPage(ButtonType.none);
     }
 
-    public void StartButton()
+    private void ShowPage(ButtonType button)
     {
-        SceneManager.LoadScene(1);
-    }
-
-    public void ExitButton()
-    {
-        Application.Quit();
+        levelsButton.interactable = !(button == ButtonType.levels);
+        newGameButton.interactable = !(button == ButtonType.newGame);
+        settingsButton.interactable = !(button == ButtonType.settings);
+        quitButton.interactable = !(button == ButtonType.quit);
+        levelsPage.SetActive(button == ButtonType.levels);
+        newGamePage.SetActive(button == ButtonType.newGame);
+        settingsPage.SetActive(button == ButtonType.settings);
+        quitPage.SetActive(button == ButtonType.quit);
     }
 
     public void ConfirmSound()
@@ -105,5 +89,23 @@ public class Menu : MonoBehaviour
     public void CancelSound()
     {
         audioSource.PlayOneShot(cancelClip);
+    }
+
+    public void StartButton()
+    {
+        PlayerPrefs.DeleteAll();
+        if (RelicPickup.instance)
+            Destroy(RelicPickup.instance.gameObject);
+        SceneManager.LoadScene(1);
+    }
+
+    public void LoadLevel(int scene)
+    {
+        SceneManager.LoadScene(scene);
+    }
+
+    public void ExitButton()
+    {
+        Application.Quit();
     }
 }
