@@ -31,7 +31,6 @@ public class PlayerController : MonoBehaviour
     private bool isInSolid = false;
     private bool isInLiquid = false;
     private float moveMultiplier = 1f;
-    private float jumpMultiplier = 1f;
     private bool isDead = false;
     private bool isSuffocating = false;
     private float blinkTimer = 0;
@@ -136,7 +135,7 @@ public class PlayerController : MonoBehaviour
     {
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && IsOnGround())
         {
-            rigid.velocity = new Vector2(rigid.velocity.x, jumpVelocity * jumpMultiplier);
+            rigid.velocity = new Vector2(rigid.velocity.x, jumpVelocity);
             animator.Play("Jump");
         }
     }
@@ -194,7 +193,6 @@ public class PlayerController : MonoBehaviour
             isInLiquid = true;
             rigid.drag = 5f;
             moveMultiplier = 0.5f;
-            jumpMultiplier = 2f;
             animator.speed = 0.5f;
             isSuffocating = true;
         }
@@ -207,7 +205,6 @@ public class PlayerController : MonoBehaviour
             isInLiquid = false;
             rigid.drag = 0;
             moveMultiplier = 1f;
-            jumpMultiplier = 1f;
             animator.speed = 1f;
             if (inAir)
             {

@@ -41,8 +41,9 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public void GetCollectible(float collectible)
+    public void GetCollectible(float collectible, Sprite sprite, string title, string description)
     {
         GameUI.instance.ShowCollectible(collectible);
+        GameUI.instance.ShowPickupUI(sprite, title, description);
     }
 }

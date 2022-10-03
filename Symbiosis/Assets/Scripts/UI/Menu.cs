@@ -40,7 +40,7 @@ public class Menu : MonoBehaviour
         if (PlayerPrefs.HasKey("Level1"))
             levelsButton.gameObject.SetActive(true);
         for (int i = 0; i < allLevels; i++)
-            if (PlayerPrefs.HasKey("Level" + i))
+            if (PlayerPrefs.HasKey("Level" + (i + 1)))
                 levelButtons[i].SetActive(true);
     }
 

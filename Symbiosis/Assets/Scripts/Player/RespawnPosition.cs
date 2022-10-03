@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class RespawnPosition : MonoBehaviour
 {
     public static RespawnPosition instance;
-    private int lastSceneIndex = 0;
+    public int lastScene = 0;
 
     private void Awake()
     {
@@ -32,12 +32,10 @@ public class RespawnPosition : MonoBehaviour
 
     private void OnSceneLoad(Scene arg0, LoadSceneMode arg1)
     {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        if (currentSceneIndex != 0 && lastSceneIndex != currentSceneIndex)
-        {
-            lastSceneIndex = currentSceneIndex;
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        if (currentScene != 0 && lastScene != currentScene)
             SetRespawnPosition(GameObject.FindGameObjectWithTag("Player").transform.position);
-        }
+        lastScene = currentScene;
     }
 
     public void SetRespawnPosition(Vector3 position)
