@@ -245,8 +245,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 1333518929
-  m_SortingOrder: 0
+  m_SortingLayerID: 658625985
+  m_SortingOrder: 200
   m_TargetDisplay: 0
 --- !u!114 &7077251488825766436
 MonoBehaviour:
@@ -647,6 +647,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86426b10a9ced7142a90a0d6fd702348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keyCount: 0
+  collectibleCount: 0
 --- !u!61 &3382808084872082135
 BoxCollider2D:
   m_ObjectHideFlags: 0

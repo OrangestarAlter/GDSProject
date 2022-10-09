@@ -11,11 +11,11 @@ public class Key : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (PlayerPrefs.HasKey("K" + key))
-            Pickup();
+        Inventory.instance.keyCount++;
         if (PlayerPrefs.HasKey("D" + key))
-            if (Inventory.instance.HaveKey(key))
-                Inventory.instance.RemoveKey(key);
+            Destroy(gameObject);
+        else if (PlayerPrefs.HasKey("K" + key))
+            Pickup();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

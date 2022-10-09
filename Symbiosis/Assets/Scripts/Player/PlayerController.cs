@@ -28,8 +28,8 @@ public class PlayerController : MonoBehaviour
     private bool leftDown = false;
     private bool movingRight = false;
     private bool movingLeft = false;
-    private bool isInSolid = false;
-    private bool isInLiquid = false;
+    private int solidCount = 0;
+    private int liquidCount = 0;
     private float moveMultiplier = 1f;
     private bool isDead = false;
     private bool isSuffocating = false;
@@ -157,60 +157,60 @@ public class PlayerController : MonoBehaviour
 
     public void InSolid()
     {
-        if (!isInSolid)
-        {
-            isInSolid = true;
-            canMove = false;
-            rigid.simulated = false;
-            boxCollider.isTrigger = true;
-            animator.speed = 0;
-            isSuffocating = true;
-        }
+        solidCount++;
+        canMove = false;
+        rigid.simulated = false;
+        boxCollider.isTrigger = true;
+        animator.speed = 0;
+        isSuffocating = true;
     }
 
     public void OutSolid(bool inAir)
     {
-        if (isInSolid)
+        if (solidCount != 0)
         {
-            isInSolid = false;
-            canMove = true;
-            rigid.simulated = true;
-            boxCollider.isTrigger = false;
-            animator.speed = 1f;
-            if (inAir)
+            solidCount--;
+            if (solidCount == 0)
             {
-                isSuffocating = false;
-                SetSpriteAlpha(1f);
-                dieTimer = 0;
+                canMove = true;
+                rigid.simulated = true;
+                boxCollider.isTrigger = false;
+                animator.speed = 1f;
+                if (inAir && liquidCount == 0)
+                {
+                    isSuffocating = false;
+                    SetSpriteAlpha(1f);
+                    dieTimer = 0;
+                }
             }
         }
     }
 
     public void InLiquid()
     {
-        if (!isInLiquid)
-        {
-            isInLiquid = true;
-            rigid.drag = 5f;
-            moveMultiplier = 0.5f;
-            animator.speed = 0.5f;
-            isSuffocating = true;
-        }
+        liquidCount++;
+        rigid.drag = 5f;
+        moveMultiplier = 0.5f;
+        animator.speed = 0.5f;
+        isSuffocating = true;
     }
 
     public void OutLiquid(bool inAir)
     {
-        if (isInLiquid)
+        if (liquidCount != 0)
         {
-            isInLiquid = false;
-            rigid.drag = 0;
-            moveMultiplier = 1f;
-            animator.speed = 1f;
-            if (inAir)
+            liquidCount--;
+            if (liquidCount == 0)
             {
-                isSuffocating = false;
-                SetSpriteAlpha(1f);
-                dieTimer = 0;
+                rigid.drag = 0;
+                moveMultiplier = 1f;
+                animator.speed = 1f;
+                if (inAir && solidCount == 0)
+                {
+                    isSuffocating = false;
+                    SetSpriteAlpha(1f);
+                    dieTimer = 0;
+                }
             }
         }
     }

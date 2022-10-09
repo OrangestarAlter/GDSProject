@@ -9,6 +9,9 @@ public class CameraController : MonoBehaviour
 
     private CinemachineVirtualCamera virtualCamera;
     private CinemachineBasicMultiChannelPerlin channelPerlin;
+    private CinemachineConfiner confiner;
+
+    private Transform target;
     private float timer = 0;
     private float duration = 0;
     private float startAmplitude = 0;
@@ -19,6 +22,13 @@ public class CameraController : MonoBehaviour
         instance = this;
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
         channelPerlin = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        confiner = GetComponent<CinemachineConfiner>();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        target = PlayerController.instance.transform;
     }
 
     // Update is called once per frame
@@ -45,5 +55,15 @@ public class CameraController : MonoBehaviour
             channelPerlin.m_FrequencyGain = frequency;
             timer = duration = time;
         }
+    }
+
+    public void SetCameraRange(PolygonCollider2D polygonCollider)
+    {
+        confiner.m_BoundingShape2D = polygonCollider;
+    }
+
+    public void OnTargetObjectWarped(Vector3 positionDelta)
+    {
+        virtualCamera.OnTargetObjectWarped(target, positionDelta);
     }
 }

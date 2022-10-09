@@ -22,7 +22,7 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isInside && isOpen && Input.GetKeyDown(KeyCode.E))
+        if (isInside && isOpen && Input.GetKeyDown(KeyCode.E) && Time.timeScale != 0)
             SceneController.instance.LoadLevel(nextScene);
     }
 

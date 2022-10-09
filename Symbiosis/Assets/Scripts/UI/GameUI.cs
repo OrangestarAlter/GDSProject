@@ -180,7 +180,7 @@ public class GameUI : MonoBehaviour
     public void ShowCollectible(float collectible)
     {
         int level = Mathf.FloorToInt(collectible);
-        int number = (int)((collectible - level) * 10);
+        int number = Mathf.RoundToInt((collectible - level) * 10);
         collectibles[level - 1].GetChild(number - 1).gameObject.SetActive(true);
         Inventory.instance.collectibleCount++;
     }

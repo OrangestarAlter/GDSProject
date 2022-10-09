@@ -18,7 +18,6 @@ public class Inventory : MonoBehaviour
     public void AddKey(float key, Color color)
     {
         keys.Add(key);
-        keyCount++;
         GameUI.instance.AddKey(color);
     }
 

@@ -25,6 +25,12 @@ public class Physics : MonoBehaviour
                     player.OutLiquid(false);
                     player.InSolid();
                 }
+                else
+                {
+                    MovableObject movable = obj.GetComponent<MovableObject>();
+                    movable.OutLiquid();
+                    movable.InSolid();
+                }
             }
         }
         boxCollider.isTrigger = false;
@@ -42,6 +48,12 @@ public class Physics : MonoBehaviour
                     PlayerController player = obj.GetComponent<PlayerController>();
                     player.OutSolid(false);
                     player.InLiquid();
+                }
+                else
+                {
+                    MovableObject movable = obj.GetComponent<MovableObject>();
+                    movable.OutSolid();
+                    movable.InLiquid();
                 }
             }
         }
@@ -61,6 +73,12 @@ public class Physics : MonoBehaviour
                     player.OutSolid(true);
                     player.OutLiquid(true);
                 }
+                else
+                {
+                    MovableObject movable = obj.GetComponent<MovableObject>();
+                    movable.OutSolid();
+                    movable.OutLiquid();
+                }
             }
         }
         boxCollider.isTrigger = true;
@@ -69,23 +87,46 @@ public class Physics : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (gameObject.layer != 7)
-            if (collision.CompareTag("Player"))
+            if (collision.CompareTag("Player") || collision.CompareTag("Movable"))
             {
                 if (!insideObjects.Contains(collision.transform))
+                {
                     insideObjects.Add(collision.transform);
-                if (gameObject.layer == 8)
-                    collision.GetComponent<PlayerController>().InLiquid();
+                    if (gameObject.layer == 8)
+                        if (collision.CompareTag("Player"))
+                            collision.GetComponent<PlayerController>().InLiquid();
+                        else
+                            collision.GetComponent<MovableObject>().InLiquid();
+                }
             }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (gameObject.layer != 7)
-        {
             if (insideObjects.Contains(collision.transform))
+            {
                 insideObjects.Remove(collision.transform);
-            if (gameObject.layer == 8 && collision.CompareTag("Player"))
-                collision.GetComponent<PlayerController>().OutLiquid(true);
-        }
+                if (gameObject.layer == 8)
+                    if (collision.CompareTag("Player"))
+                        collision.GetComponent<PlayerController>().OutLiquid(true);
+                    else
+                        collision.GetComponent<MovableObject>().OutLiquid();
+            }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (gameObject.layer == 7)
+            if (collision.gameObject.CompareTag("Movable"))
+                if (!insideObjects.Contains(collision.transform))
+                    insideObjects.Add(collision.transform);
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (gameObject.layer == 7)
+            if (!insideObjects.Contains(collision.transform))
+                insideObjects.Remove(collision.transform);
     }
 }
