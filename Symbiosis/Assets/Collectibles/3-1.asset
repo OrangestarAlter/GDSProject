@@ -15,5 +15,5 @@ MonoBehaviour:
   number: 3.1
   sprite: {fileID: 21300000, guid: 6d0699a0aec33294d96f939d1dd58a7f, type: 3}
   title: A crumpled note
-  description: "\xE5\xB7\xA1\xE9\u0178\xB3\xE3\u0192\xAB\xE3\u201A\xAB \xD1\xB2\xD2\xF4\xA5\xEB\xA5\xAB\r\n\"Left!
-    Left! Left!\"\n\"Left! Go Left! Left!!!\"\n\u3125s\u5F42\u935ATo\u5F3Dp\u53E3bA\u947B\u7B22\u9367C\uFFE0\u567Ek\r"
+  description: "\xE5\xB7\xA1\xE9\u0178\xB3\xE3\u0192\xAB\xE3\u201A\xAB \xD1\xB2\xD2\xF4\xA5\xEB\xA5\xAB\r\n\n\"Left!
+    Left! Left!\"\n\"Left! Go Left! Left!!!\"\n\n\u3125s\u5F42\u935ATo\u5F3Dp\u53E3bA\u947B\u7B22\u9367C\uFFE0\u567Ek\r"

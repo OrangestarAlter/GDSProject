@@ -15,5 +15,5 @@ MonoBehaviour:
   number: 3.2
   sprite: {fileID: 21300000, guid: 594dfbe71d4ff7740aa892c22e534072, type: 3}
   title: "\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD"
-  description: "\u93B4\u6223\u5158\u935A\u70B0\u7B05\u941C\u8364\u62D1\u9470\u5C7C\u7B09\u6D7C\u3088\u97E9\u6D63\u64B1\r\n\"Come,
-    right.\"\n\"I know you will pick us.\"\nc,%O7\u0752\u019F]mE7\u5467Y_ ~_e9]#s~]\u07D2}\r"
+  description: "\u93B4\u6223\u5158\u935A\u70B0\u7B05\u941C\u8364\u62D1\u9470\u5C7C\u7B09\u6D7C\u3088\u97E9\u6D63\u64B1\r\n\n\"Come,
+    right.\"\n\"I know you will pick us.\"\n\nc,%O7\u0752\u019F]mE7\u5467Y_ ~_e9]#s~]\u07D2}\r"

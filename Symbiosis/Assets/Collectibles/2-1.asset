@@ -15,6 +15,6 @@ MonoBehaviour:
   number: 2.1
   sprite: {fileID: 21300000, guid: ae18fc209fd47784c921df175061fbbe, type: 3}
   title: A flat note
-  description: "An ordinary flat note, it seems nothing special.\r\n\"What are you
-    waiting for?\"\n\"You are already coming to me.\"\nBut the above words seem to
-    s+T*|o^>p\u2019\r"
+  description: "An ordinary flat note, it seems nothing special.\r\n\n\"What are
+    you waiting for?\"\n\"You are already coming to me.\"\n\nBut the above words
+    seem to s+T*|o^>p\u2019\r"
