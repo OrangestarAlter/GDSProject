@@ -300,13 +300,13 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Click on objects to select them and use mouse scroll wheel to change density.
-    Right click to cancel selection.
+  m_Text: 'Click on an object to select it and use mouse scroll wheel to change its
+    density. Right click to cancel selection.
 
-    Press S to select yourself.
+    Press S can select yourself.
 
-    All objects
-    in the range will be affected by the ability.'
+    All
+    objects in the selection range will be affected by the ability.'
 --- !u!1 &3636125439072172959
 GameObject:
   m_ObjectHideFlags: 0

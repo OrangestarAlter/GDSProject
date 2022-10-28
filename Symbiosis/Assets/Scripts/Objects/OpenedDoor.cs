@@ -12,12 +12,14 @@ public class OpenedDoor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isInside && Input.GetKeyDown(KeyCode.E) && Time.timeScale != 0)
+        if (isInside && Input.GetKeyDown(KeyCode.E) && Time.timeScale != 0 && PlayerController.instance.canMove)
         {
             Transform player = PlayerController.instance.transform;
+            player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             Vector3 positionDelta = newPosition - player.position;
             player.position = newPosition;
             CameraController.instance.OnTargetObjectWarped(positionDelta);
+            GameUI.instance.DoorEffect();
         }
     }
 

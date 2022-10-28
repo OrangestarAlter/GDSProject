@@ -8,6 +8,11 @@ public class RespawnPosition : MonoBehaviour
 {
     public static RespawnPosition instance;
     public int lastScene = 0;
+    public bool resetPosition = false;
+
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip menuBGM;
+    [SerializeField] private AudioClip levelBGM;
 
     private void Awake()
     {
@@ -15,6 +20,7 @@ public class RespawnPosition : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
             instance = this;
+            audioSource = GetComponent<AudioSource>();
         }
         else
             Destroy(gameObject);
@@ -33,8 +39,25 @@ public class RespawnPosition : MonoBehaviour
     private void OnSceneLoad(Scene arg0, LoadSceneMode arg1)
     {
         int currentScene = SceneManager.GetActiveScene().buildIndex;
-        if (currentScene != 0 && lastScene != currentScene)
-            SetRespawnPosition(GameObject.FindGameObjectWithTag("Player").transform.position);
+        if (lastScene != currentScene)
+        {
+            if (lastScene == 0 && currentScene != 0)
+            {
+                audioSource.clip = levelBGM;
+                audioSource.Play();
+            }
+            if ((currentScene == 0 && lastScene != 5 && lastScene != 6) || currentScene == 5 || currentScene == 6)
+            {
+                audioSource.clip = menuBGM;
+                audioSource.Play();
+            }
+            if (currentScene != 0 && currentScene != 6)
+                SetRespawnPosition(GameObject.FindGameObjectWithTag("Player").transform.position);
+        }
+        else if (resetPosition)
+            if (currentScene != 0 && currentScene != 6)
+                SetRespawnPosition(GameObject.FindGameObjectWithTag("Player").transform.position);
+        resetPosition = false;
         lastScene = currentScene;
     }
 

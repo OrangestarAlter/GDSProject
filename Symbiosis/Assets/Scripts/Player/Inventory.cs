@@ -6,13 +6,29 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
 
+    [SerializeField] private List<float> allCollectible;
     private List<float> keys = new List<float>();
     public int keyCount = 0;
     public int collectibleCount = 0;
+    public bool haveAllCollectible = false;
 
     private void Awake()
     {
         instance = this;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        foreach (float collectible in allCollectible)
+            if (PlayerPrefs.HasKey("C" + collectible))
+            {
+                if (GameUI.instance)
+                    GameUI.instance.ShowCollectible(collectible);
+                collectibleCount++;
+            }
+        if (collectibleCount == allCollectible.Count)
+            haveAllCollectible = true;
     }
 
     public void AddKey(float key, Color color)
@@ -42,6 +58,7 @@ public class Inventory : MonoBehaviour
 
     public void GetCollectible(float collectible, Sprite sprite, string title, string description)
     {
+        collectibleCount++;
         GameUI.instance.ShowCollectible(collectible);
         GameUI.instance.ShowPickupUI(sprite, title, description);
     }

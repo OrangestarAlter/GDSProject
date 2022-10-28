@@ -37,9 +37,7 @@ public class GameUI : MonoBehaviour
 
     [SerializeField] private int allLevels;
     [SerializeField] private List<Transform> collectibles;
-    [SerializeField] private List<float> allCollectible;
     [SerializeField] private GameObject collectibleUI;
-
     [SerializeField] private Transform keys;
     [SerializeField] private GameObject keyUI;
 
@@ -47,6 +45,8 @@ public class GameUI : MonoBehaviour
     [SerializeField] private Image detailImage;
     [SerializeField] private Text detailTitle;
     [SerializeField] private Text detailDescription;
+
+    [SerializeField] private Image doorEffect;
 
     private AudioSource audioSource;
 
@@ -67,9 +67,6 @@ public class GameUI : MonoBehaviour
                 levelButtons[i].SetActive(true);
                 levelCollectibles[i].SetActive(true);
             }
-        foreach (float collectible in allCollectible)
-            if (PlayerPrefs.HasKey("C" + collectible))
-                ShowCollectible(collectible);
     }
 
     public void HideUI()
@@ -153,7 +150,7 @@ public class GameUI : MonoBehaviour
     public void LoadLevel(int scene)
     {
         Time.timeScale = 1;
-        RespawnPosition.instance.lastScene = 0;
+        RespawnPosition.instance.resetPosition = true;
         SceneController.instance.LoadLevel(scene);
     }
 
@@ -182,7 +179,6 @@ public class GameUI : MonoBehaviour
         int level = Mathf.FloorToInt(collectible);
         int number = Mathf.RoundToInt((collectible - level) * 10);
         collectibles[level - 1].GetChild(number - 1).gameObject.SetActive(true);
-        Inventory.instance.collectibleCount++;
     }
 
     public void ShowPickupUI(Sprite sprite, string title, string description)
@@ -202,5 +198,29 @@ public class GameUI : MonoBehaviour
     public void CloseDetail()
     {
         detailPage.SetActive(false);
+    }
+
+    public void DoorEffect()
+    {
+        doorEffect.color = new Color(0, 0, 0, 1f);
+        doorEffect.gameObject.SetActive(true);
+        PlayerController.instance.canMove = false;
+        InputController.instance.canInput = false;
+        StartCoroutine(Effect(0.5f));
+    }
+
+    IEnumerator Effect(float duration)
+    {
+        float timer = 0;
+        while (timer < duration)
+        {
+            doorEffect.color = new Color(0, 0, 0, Mathf.Lerp(1f, 0, timer / duration));
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        doorEffect.color = new Color(0, 0, 0, 0);
+        PlayerController.instance.canMove = true;
+        InputController.instance.canInput = InputController.instance.haveRelic;
+        doorEffect.gameObject.SetActive(false);
     }
 }

@@ -15,6 +15,10 @@ MonoBehaviour:
   number: 0
   sprite: {fileID: 21300000, guid: e5299c3336a83f540bdc9cc81b0fb653, type: 3}
   title: Relic
-  description: "Click on objects to select them and use mouse scroll wheel to change
-    density. Right click to cancel selection. \nPress S to select yourself. \nAll
-    objects in the range will be affected by the ability."
+  description: 'Click on an object to select it and use mouse scroll wheel to change
+    its density. Right click to cancel selection.
+
+    Press S can select yourself.
+
+    All
+    objects in the selection range will be affected by the ability.'

@@ -8,6 +8,7 @@ public class RelicPickup : MonoBehaviour
     public static RelicPickup instance;
 
     [SerializeField] private GameObject tutorial;
+    [SerializeField] private GameObject airWall;
 
     private bool canPickup = false;
     private Light2D light2d;
@@ -46,6 +47,7 @@ public class RelicPickup : MonoBehaviour
             InputController.instance.canInput = InputController.instance.haveRelic = true;
             GameUI.instance.ShowPickupUI(null, null, null);
             tutorial.SetActive(true);
+            airWall.SetActive(true);
             gameObject.SetActive(false);
         }
     }

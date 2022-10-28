@@ -647,8 +647,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86426b10a9ced7142a90a0d6fd702348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allCollectible:
+  - 1.1
+  - 1.2
+  - 2.1
+  - 2.2
+  - 3.1
+  - 3.2
   keyCount: 0
   collectibleCount: 0
+  haveAllCollectible: 0
 --- !u!61 &3382808084872082135
 BoxCollider2D:
   m_ObjectHideFlags: 0

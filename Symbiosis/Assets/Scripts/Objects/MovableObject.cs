@@ -40,7 +40,7 @@ public class MovableObject : MonoBehaviour
     {
         liquidCount++;
         rigid.drag = 10f;
-        rigid.angularDrag = 0.2f;
+        rigid.angularDrag = 2.5f;
     }
 
     public void OutLiquid()

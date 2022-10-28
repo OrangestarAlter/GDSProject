@@ -66,7 +66,7 @@ public class SavePoint : MonoBehaviour
     private void SetBreathLight()
     {
         isActive = false;
-        light2d.color = new Color(1f, 0.75f, 0);
+        light2d.color = new Color(1f, 0.5f, 0);
         light2d.pointLightInnerRadius = 0;
         light2d.pointLightOuterRadius = 1f;
         light2d.intensity = 0.5f;

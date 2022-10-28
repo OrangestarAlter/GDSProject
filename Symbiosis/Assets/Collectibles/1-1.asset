@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: 1-1
   m_EditorClassIdentifier: 
   number: 1.1
-  title: 1-1
-  description: 1-1
-  sprite: {fileID: 21300000, guid: e5299c3336a83f540bdc9cc81b0fb653, type: 3}
+  sprite: {fileID: 21300000, guid: e1a130698812ef348912f0cb349b9082, type: 3}
+  title: A crumpled note
+  description: "An ordinary crumpled note, it seems nothing special.\r\n\"Don\u2019t
+    go! Don\u2019t go to there!!!\"\n\"It is not a good place, go home, back to home...\"\nBut
+    the above words seem to want someone to go back.\r"

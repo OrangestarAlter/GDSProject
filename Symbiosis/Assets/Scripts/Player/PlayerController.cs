@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
     private bool leftDown = false;
     private bool movingRight = false;
     private bool movingLeft = false;
+    private bool isOnGround = true;
+
     private int solidCount = 0;
     private int liquidCount = 0;
     private float moveMultiplier = 1f;
@@ -87,6 +89,8 @@ public class PlayerController : MonoBehaviour
         else
             moveDir = 0;
 
+        CheckGround();
+
         if (canMove)
         {
             Jump();
@@ -112,40 +116,36 @@ public class PlayerController : MonoBehaviour
     {
         if (canMove)
             Move();
+        animator.SetFloat("speed", Mathf.Abs(rigid.velocity.x));
+        rigid.velocity = new Vector2(Mathf.Clamp(rigid.velocity.x, -moveSpeed * moveMultiplier, moveSpeed * moveMultiplier), Mathf.Clamp(rigid.velocity.y, -maxFallSpeed, 100f));
     }
 
     private void Move()
     {
-        float speed = moveSpeed * moveMultiplier;
-        if (IsOnGround())
-            rigid.velocity = new Vector2(moveDir * speed, rigid.velocity.y);
+        if (isOnGround)
+            rigid.velocity = new Vector2(moveDir * moveSpeed * moveMultiplier, rigid.velocity.y);
         else
-        {
-            rigid.velocity += new Vector2(moveDir * speed * jumpingControl * Time.fixedDeltaTime, 0);
-            rigid.velocity = new Vector2(Mathf.Clamp(rigid.velocity.x, -speed, speed), Mathf.Clamp(rigid.velocity.y, -maxFallSpeed, 100f));
-        }
+            rigid.velocity += new Vector2(moveDir * moveSpeed * moveMultiplier * jumpingControl * Time.fixedDeltaTime, 0);
         if (rigid.velocity.x > 0.01f)
             playerSprite.localScale = new Vector3(1f, 1f, 1f);
         else if (rigid.velocity.x < -0.01f)
             playerSprite.localScale = new Vector3(-1f, 1f, 1f);
-        animator.SetFloat("speed", Mathf.Abs(rigid.velocity.x));
     }
 
     private void Jump()
     {
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && IsOnGround())
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && isOnGround)
         {
             rigid.velocity = new Vector2(rigid.velocity.x, jumpVelocity);
             animator.Play("Jump");
         }
     }
 
-    private bool IsOnGround()
+    private void CheckGround()
     {
         Vector2 size = new Vector2(boxCollider.bounds.size.x, boxCollider.bounds.size.y * 0.5f);
-        bool isOnGround = Physics2D.BoxCast(boxCollider.bounds.center, size, 0, Vector2.down, size.y * 0.5f + 0.1f, platformLayer);
+        isOnGround = Physics2D.BoxCast(boxCollider.bounds.center, size, 0, Vector2.down, size.y * 0.5f + 0.1f, platformLayer);
         animator.SetBool("isOnGround", isOnGround);
-        return isOnGround;
     }
 
     public void ChangeJumpValues(float jumpVelocity, float gravityScale, float jumpingControl)

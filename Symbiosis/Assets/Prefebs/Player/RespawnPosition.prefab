@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastScene: 0
+  menuBGM: {fileID: 8300000, guid: 788e8ed1b9fd779469d1c011c35ad1b5, type: 3}
+  levelBGM: {fileID: 8300000, guid: 852ee837839d0da439fe2cf143e117c5, type: 3}
 --- !u!61 &5839844124755869211
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -15,6 +15,8 @@ public class Menu : MonoBehaviour
         quit
     }
 
+    [SerializeField] private GameObject menuPanel;
+
     [SerializeField] private Button levelsButton;
     [SerializeField] private Button newGameButton;
     [SerializeField] private Button settingsButton;
@@ -31,11 +33,15 @@ public class Menu : MonoBehaviour
     [SerializeField] private List<GameObject> levelButtons;
     [SerializeField] private int allLevels;
 
+    [SerializeField] private CGDialogue cgDialogue;
+    [SerializeField] private Dialogue dialogue;
+
     private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = true;
         audioSource = GetComponent<AudioSource>();
         if (PlayerPrefs.HasKey("Level1"))
             levelsButton.gameObject.SetActive(true);
@@ -96,7 +102,9 @@ public class Menu : MonoBehaviour
         PlayerPrefs.DeleteAll();
         if (RelicPickup.instance)
             Destroy(RelicPickup.instance.gameObject);
-        SceneManager.LoadScene(1);
+        menuPanel.SetActive(false);
+        Cursor.visible = false;
+        cgDialogue.ShowDialogue(dialogue);
     }
 
     public void LoadLevel(int scene)

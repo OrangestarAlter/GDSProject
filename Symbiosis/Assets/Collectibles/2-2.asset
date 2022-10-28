@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 2-2
   m_EditorClassIdentifier: 
   number: 2.2
-  sprite: {fileID: 21300000, guid: e5299c3336a83f540bdc9cc81b0fb653, type: 3}
-  title: 2-2
-  description: 2-2
+  sprite: {fileID: 21300000, guid: 8b0b975c87aca4a4aab5d020485a3392, type: 3}
+  title: A crumpled note
+  description: "An ordinary crumpled note, it $]850(*;#%*\r\n\"Please don\u2019t
+    go!\"\n\"Before it was too late.\"\nBut the above words !3_0*%94}C^o,M~\\)e\r"
