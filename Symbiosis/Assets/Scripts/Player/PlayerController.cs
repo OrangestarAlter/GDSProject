@@ -118,6 +118,16 @@ public class PlayerController : MonoBehaviour
             Move();
         animator.SetFloat("speed", Mathf.Abs(rigid.velocity.x));
         rigid.velocity = new Vector2(Mathf.Clamp(rigid.velocity.x, -moveSpeed * moveMultiplier, moveSpeed * moveMultiplier), Mathf.Clamp(rigid.velocity.y, -maxFallSpeed, 100f));
+        if (Mathf.Abs(rigid.velocity.x) > 0.01f && isOnGround && !isSuffocating)
+        {
+            if (!audioSource.isPlaying)
+                audioSource.Play();
+        }
+        else
+        {
+            if (audioSource.isPlaying)
+                audioSource.Stop();
+        }
     }
 
     private void Move()

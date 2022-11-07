@@ -10,8 +10,9 @@ public class RelicPickup : MonoBehaviour
     [SerializeField] private GameObject tutorial;
     [SerializeField] private GameObject airWall;
 
-    private bool canPickup = false;
     private Light2D light2d;
+    private AudioSource audioSource;
+    private bool canPickup = false;
     private float timer = 0;
     private int sign = 1;
 
@@ -22,6 +23,7 @@ public class RelicPickup : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             instance = this;
             light2d = GetComponent<Light2D>();
+            audioSource = GetComponent<AudioSource>();
         }
         else
         {
@@ -73,5 +75,17 @@ public class RelicPickup : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
             canPickup = false;
+    }
+
+    public void PlaySound()
+    {
+        if (isActiveAndEnabled)
+            audioSource.volume = 1f;
+    }
+
+    public void StopSound()
+    {
+        if (isActiveAndEnabled)
+            audioSource.volume = 0;
     }
 }

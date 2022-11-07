@@ -23,6 +23,7 @@ public class LiftGate : MonoBehaviour
         if (collision.CompareTag("Player") && Inventory.instance.HaveKey(key))
         {
             Open();
+            GetComponent<AudioSource>().Play();
             StartCoroutine(Openning(distance, 2f));
         }
     }

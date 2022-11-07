@@ -33,6 +33,7 @@ public class Door : MonoBehaviour
             if (!isOpen && Inventory.instance.HaveKey(key))
             {
                 Open();
+                GetComponent<AudioSource>().Play();
             }
             isInside = true;
             if (isOpen)
